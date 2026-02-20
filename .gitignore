@@ -1,0 +1,7 @@
+target/
+storage/
+.idea/
+*.logtarget/
+storage/
+.idea/
+*.log
