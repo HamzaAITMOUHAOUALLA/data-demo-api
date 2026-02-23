@@ -16,5 +16,8 @@ java -jar target/data-demo-api-1.0.0.jar
 ## Endpoints
 
 POST /api/files/upload
+
 POST /api/files/process/{id}
+
 GET  /api/files/download/{id}
+
