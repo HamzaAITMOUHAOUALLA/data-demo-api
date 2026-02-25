@@ -2,9 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: data-demo-deployment
-  annotations:
-    argocd-image-updater.argoproj.io/image-list: data-demo=hamzaaitmouhaoualla/data-demo-api
-    argocd-image-updater.argoproj.io/data-demo.update-strategy: newest-build
 spec:
   replicas: 1
   selector:
@@ -17,6 +14,6 @@ spec:
     spec:
       containers:
       - name: data-demo
-        image: hamzaaitmouhaoualla/data-demo-api:latest
+        image: hamzaaitmouhaoualla/data-demo-api:1.0
         ports:
         - containerPort: 8080
