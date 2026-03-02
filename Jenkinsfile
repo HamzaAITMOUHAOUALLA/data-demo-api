@@ -123,6 +123,13 @@ ENTRYPOINT ["java","-jar","app.jar"]
                 '''
             }
         }
+stage('Debug') {
+    steps {
+        sh 'ls -la'
+        sh 'file e2e-test.sh || true'
+        sh 'cat -A e2e-test.sh || true'
+    }
+}
 stage('DATA E2E - Binary Integrity Test') {
     steps {
         sh 'chmod +x e2e-test.sh'
