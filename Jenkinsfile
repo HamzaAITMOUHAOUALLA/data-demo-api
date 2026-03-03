@@ -122,7 +122,7 @@ pipeline {
                 '''
             }
         }
-}
+        
 stage('DATA E2E - Binary Integrity Test') {
     steps {
         sh 'chmod +x e2e-test.sh'
