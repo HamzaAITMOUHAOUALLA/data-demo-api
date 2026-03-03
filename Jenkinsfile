@@ -77,7 +77,7 @@ pipeline {
                 sh "docker build -t ${IMAGE_NAME}:staging ."
             }
         }
-        /*
+        
         stage('Trivy Security Scan') {
             steps {
                 sh '''
@@ -90,7 +90,7 @@ pipeline {
                 '''
             }
         }
-   */
+   
     /* ================== STAGING ZONE ===================== */
 
         stage('Clean Previous Container') {
