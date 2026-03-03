@@ -83,7 +83,8 @@ pipeline {
             steps {
                 sh "docker build -t ${IMAGE_NAME}:staging ."
             }
-        }/*
+        }
+        /*
 
         stage('Trivy Security Scan') {
             steps {
@@ -142,7 +143,7 @@ stage('Calculate Version') {
     env.FULL_IMAGE = "${env.IMAGE_NAME}:${env.IMAGE_TAG}"
     }
     }
-
+}
         stage('Build Production Image') {
             steps {
                 sh '''
