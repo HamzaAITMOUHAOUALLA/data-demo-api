@@ -154,10 +154,10 @@ stage('Calculate Version') {
     steps {
         sh 'chmod +x calculate-version.sh'
         sh './calculate-version.sh'
-
         script {
-            env.IMAGE_TAG = readFile('.image_tag').trim()
-        }
+    env.IMAGE_TAG = readFile('VERSION').trim()
+    env.FULL_IMAGE = "hamzaaitmouhaoualla/data-demo-api:${env.IMAGE_TAG}"
+}
     }
 }
 
@@ -214,15 +214,16 @@ stage('Update GitOps Repo') {
             usernameVariable: 'GIT_USER',
             passwordVariable: 'GIT_PASS'
         )]) {
-
             sh '''
+            export FULL_IMAGE=${FULL_IMAGE}
             chmod +x update-gitops.sh
-            git remote set-url origin https://${GIT_USER}:${GIT_PASS}@github.com/HamzaAITMOUHAOUALLA/data-demo-api.git
             ./update-gitops.sh
             '''
         }
     }
 }
+
+
 stage('Persist Version') {
     steps {
         withCredentials([usernamePassword(
