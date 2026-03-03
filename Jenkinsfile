@@ -10,11 +10,8 @@ pipeline {
     }
 
     stages {
-
-    /* ===================================================== */
     /* ====================== CI ZONE ====================== */
-    /* ===================================================== */
-
+    
         stage('Checkout') {
             steps {
                 git branch: 'main',
@@ -74,18 +71,13 @@ pipeline {
                 }
             }
         }    */
-    /* ===================================================== */
     /* ================== SECURITY ZONE ==================== */
-    /* ===================================================== */
-    
-
         stage('Docker Build (Local)') {
             steps {
                 sh "docker build -t ${IMAGE_NAME}:staging ."
             }
         }
         /*
-
         stage('Trivy Security Scan') {
             steps {
                 sh '''
@@ -99,9 +91,7 @@ pipeline {
             }
         }
    */
-    /* ===================================================== */
     /* ================== STAGING ZONE ===================== */
-    /* ===================================================== */
 
         stage('Clean Previous Container') {
             steps {
@@ -130,20 +120,17 @@ stage('DATA E2E - Binary Integrity Test') {
         sh './e2e-test.sh'
     }
 }
-    /* ===================================================== */
     /* =================== PROD ZONE ======================= */
-    /* ===================================================== */
-
-stage('Calculate Version') {
-    steps {
-        sh 'chmod +x calculate-version.sh'
-        sh './calculate-version.sh'
-        script {
-    env.IMAGE_TAG = readFile('VERSION').trim()
-    env.FULL_IMAGE = "${env.IMAGE_NAME}:${env.IMAGE_TAG}"
+    stage('Calculate Version') {
+        steps {
+            sh 'chmod +x calculate-version.sh'
+            sh './calculate-version.sh'
+            script {
+            env.IMAGE_TAG = readFile('VERSION').trim()
+            env.FULL_IMAGE = "${env.IMAGE_NAME}:${env.IMAGE_TAG}"
+            }
+        }
     }
-    }
-}
         stage('Build Production Image') {
             steps {
                 sh '''
@@ -188,39 +175,38 @@ stage('Calculate Version') {
             }
         }*/
 
-stage('Update GitOps Repo') {
-    steps {
-        withCredentials([usernamePassword(
-            credentialsId: 'git-credentials',
-            usernameVariable: 'GIT_USER',
-            passwordVariable: 'GIT_PASS'
-        )]) {
-            sh '''
-            export FULL_IMAGE=${FULL_IMAGE}
-            chmod +x update-gitops.sh
-            ./update-gitops.sh
-            '''
-        }
-    }
-}
+            stage('Update GitOps Repo') {
+                steps {
+                    withCredentials([usernamePassword(
+                        credentialsId: 'git-credentials',
+                        usernameVariable: 'GIT_USER',
+                        passwordVariable: 'GIT_PASS'
+                    )]) {
+                        sh '''
+                        export FULL_IMAGE=${FULL_IMAGE}
+                        chmod +x update-gitops.sh
+                        ./update-gitops.sh
+                        '''
+                    }
+                }
+            }
 
-stage('Persist Version') {
-    steps {
-        withCredentials([usernamePassword(
-            credentialsId: 'git-credentials',
-            usernameVariable: 'GIT_USER',
-            passwordVariable: 'GIT_PASS'
-        )]) {
-
-            sh '''
-            chmod +x persist-version.sh
-            git remote set-url origin https://${GIT_USER}:${GIT_PASS}@github.com/HamzaAITMOUHAOUALLA/data-demo-api.git
-            ./persist-version.sh
-            '''
-        }
-    }
-}
-    }
+        stage('Persist Version') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'git-credentials',
+                    usernameVariable: 'GIT_USER',
+                    passwordVariable: 'GIT_PASS'
+                )]){
+                    sh '''
+                    chmod +x persist-version.sh
+                    git remote set-url origin https://${GIT_USER}:${GIT_PASS}@github.com/HamzaAITMOUHAOUALLA/data-demo-api.git
+                    ./persist-version.sh
+                    '''
+                    }
+                }
+                }
+            }
 
     post {
         always {
