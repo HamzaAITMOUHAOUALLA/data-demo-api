@@ -138,7 +138,7 @@ stage('DATA E2E - Binary Integrity Test') {
                 '''
             }
         }
-        /* stage('Push to Harbor') {
+        stage('Push to Harbor') {
             steps {
                 withCredentials([usernamePassword(
                     credentialsId: 'harbor-credentials',
@@ -146,30 +146,12 @@ stage('DATA E2E - Binary Integrity Test') {
                     passwordVariable: 'HARBOR_PASS'
                 )]) {
                     sh '''
-                    echo "Tagging image for Harbor..."
-        
-                    docker tag ${IMAGE_NAME}:${IMAGE_TAG} \
-                      ${HARBOR_REGISTRY}/${HARBOR_PROJECT}/${IMAGE_NAME}:${IMAGE_TAG}
-        
-                    docker tag ${IMAGE_NAME}:${IMAGE_TAG} \
-                      ${HARBOR_REGISTRY}/${HARBOR_PROJECT}/${IMAGE_NAME}:latest
-        
-                    echo "Logging into Harbor..."
-                    docker login ${HARBOR_REGISTRY} \
-                      -u $HARBOR_USER \
-                      -p $HARBOR_PASS
-        
-                    echo "Pushing version..."
-                    docker push ${HARBOR_REGISTRY}/${HARBOR_PROJECT}/${IMAGE_NAME}:${IMAGE_TAG}
-        
-                    echo "Pushing latest..."
-                    docker push ${HARBOR_REGISTRY}/${HARBOR_PROJECT}/${IMAGE_NAME}:latest
-        
-                    docker logout ${HARBOR_REGISTRY}
+                    chmod +x push-to-harbor.sh
+                    ./push-to-harbor.sh
                     '''
                 }
             }
-        }*/
+        }
 
             stage('Update GitOps Repo') {
                 steps {
