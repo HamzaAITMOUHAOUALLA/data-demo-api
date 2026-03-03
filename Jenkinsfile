@@ -156,7 +156,7 @@ stage('Calculate Version') {
         sh './calculate-version.sh'
         script {
     env.IMAGE_TAG = readFile('VERSION').trim()
-    env.FULL_IMAGE = "hamzaaitmouhaoualla/data-demo-api:${env.IMAGE_TAG}"
+    env.FULL_IMAGE = "${env.IMAGE_NAME}:${env.IMAGE_TAG}"
 }
     }
 }
