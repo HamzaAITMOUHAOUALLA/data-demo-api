@@ -138,7 +138,7 @@ stage('DATA E2E - Binary Integrity Test') {
                 '''
             }
         }
-        stage('Push to Harbor') {
+        /*stage('Push to Harbor') {
             steps {
                 withCredentials([usernamePassword(
                     credentialsId: 'harbor-credentials',
@@ -151,7 +151,7 @@ stage('DATA E2E - Binary Integrity Test') {
                     '''
                 }
             }
-        }
+        }*/
 
             stage('Update GitOps Repo') {
                 steps {
