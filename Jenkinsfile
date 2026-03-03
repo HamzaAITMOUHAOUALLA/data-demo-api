@@ -142,7 +142,6 @@ stage('Calculate Version') {
     env.FULL_IMAGE = "${env.IMAGE_NAME}:${env.IMAGE_TAG}"
     }
     }
-}
 
         stage('Build Production Image') {
             steps {
