@@ -54,7 +54,7 @@ pipeline {
                 '''
             }
         } 
-        /*
+        
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQubeServer') {
@@ -70,7 +70,7 @@ pipeline {
                     }
                 }
             }
-        }    */
+        }   
     /* ================== SECURITY ZONE ==================== */
         stage('Docker Build (Local)') {
             steps {
