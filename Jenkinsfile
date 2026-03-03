@@ -21,6 +21,16 @@ pipeline {
                     url: 'https://github.com/HamzaAITMOUHAOUALLA/data-demo-api.git'
             }
         }
+        stage('Fix Line Endings') {
+    steps {
+        sh '''
+        sed -i 's/\r$//' e2e-test.sh
+        sed -i 's/\r$//' calculate-version.sh
+        sed -i 's/\r$//' update-gitops.sh
+        sed -i 's/\r$//' persist-version.sh
+        '''
+    }
+}
 
         stage('Build') {
             steps {
