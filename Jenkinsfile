@@ -78,17 +78,6 @@ pipeline {
     /* ================== SECURITY ZONE ==================== */
     /* ===================================================== */
     /*
-        stage('Create Dockerfile') {
-            steps {
-                writeFile file: 'Dockerfile', text: '''
-FROM eclipse-temurin:17-jdk-alpine
-WORKDIR /app
-COPY target/*.jar app.jar
-EXPOSE 8080
-ENTRYPOINT ["java","-jar","app.jar"]
-'''
-            }
-        }*/
 
         stage('Docker Build (Local)') {
             steps {
@@ -133,12 +122,6 @@ ENTRYPOINT ["java","-jar","app.jar"]
                 '''
             }
         }
-stage('Debug') {
-    steps {
-        sh 'ls -la'
-        sh 'file e2e-test.sh || true'
-        sh 'cat -A e2e-test.sh || true'
-    }
 }
 stage('DATA E2E - Binary Integrity Test') {
     steps {
@@ -157,11 +140,9 @@ stage('Calculate Version') {
         script {
     env.IMAGE_TAG = readFile('VERSION').trim()
     env.FULL_IMAGE = "${env.IMAGE_NAME}:${env.IMAGE_TAG}"
-}
+    }
     }
 }
-
-
 
         stage('Build Production Image') {
             steps {
@@ -222,7 +203,6 @@ stage('Update GitOps Repo') {
         }
     }
 }
-
 
 stage('Persist Version') {
     steps {
