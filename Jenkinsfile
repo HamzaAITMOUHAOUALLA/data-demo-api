@@ -42,7 +42,7 @@ pipeline {
             }
         }
 
-   /*     stage('Unit Tests') {
+       stage('Unit Tests') {
             steps {
                 sh '''
                 if [ -f mvnw ]; then
@@ -54,7 +54,7 @@ pipeline {
                 '''
             }
         } 
-        
+        /*
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQubeServer') {
