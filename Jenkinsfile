@@ -78,7 +78,7 @@ pipeline {
             }
         }
         
-        stage('Trivy Security Scan') {
+        /*stage('Trivy Security Scan') {
             steps {
                 sh '''
                 docker run --rm \
@@ -89,7 +89,22 @@ pipeline {
                 ${IMAGE_NAME}:staging
                 '''
             }
-        }
+        }*/
+        stage('Trivy Security Scan') {
+    steps {
+        sh '''
+        docker run --rm \
+        -v /var/run/docker.sock:/var/run/docker.sock \
+        -v trivy-cache:/root/.cache/ \
+        aquasec/trivy:latest image \
+        --timeout 10m \
+        --scanners vuln \
+        --severity HIGH,CRITICAL \
+        --exit-code 1 \
+        ${IMAGE_NAME}:staging
+        '''
+    }
+}
    
     /* ================== STAGING ZONE ===================== */
 
