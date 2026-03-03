@@ -12,12 +12,12 @@ pipeline {
     stages {
     /* ====================== CI ZONE ====================== */
     
-        stage('Checkout') {
+        /*stage('Checkout') {
             steps {
                 git branch: 'main',
                     url: 'https://github.com/HamzaAITMOUHAOUALLA/data-demo-api.git'
             }
-        }
+        }*/
         stage('Fix Line Endings') {
     steps {
         sh '''
