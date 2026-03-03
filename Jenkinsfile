@@ -44,14 +44,7 @@ pipeline {
 
        stage('Unit Tests') {
             steps {
-                sh '''
-                if [ -f mvnw ]; then
-                  chmod +x mvnw
-                  ./mvnw test
-                  else
-                  mvn test
-                fi
-                '''
+                sh 'mvn test'
             }
         } 
         
