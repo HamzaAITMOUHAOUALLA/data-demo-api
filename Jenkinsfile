@@ -23,6 +23,7 @@ pipeline {
         sh '''
         sed -i 's/\r$//' e2e-test.sh
         sed -i 's/\r$//' calculate-version.sh
+        sed -i 's/\r$//' push-to-harbor.sh
         sed -i 's/\r$//' update-gitops.sh
         sed -i 's/\r$//' persist-version.sh
         '''
