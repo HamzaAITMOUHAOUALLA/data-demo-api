@@ -139,19 +139,22 @@ stage('DATA E2E - Binary Integrity Test') {
             }
         }
         /*stage('Push to Harbor') {
-            steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'harbor-credentials',
-                    usernameVariable: 'HARBOR_USER',
-                    passwordVariable: 'HARBOR_PASS'
-                )]) {
-                    sh '''
-                    chmod +x push-to-harbor.sh
-                    ./push-to-harbor.sh
-                    '''
-                }
+    when {
+        branch 'main'
+    }
+        steps {
+            withCredentials([usernamePassword(
+                credentialsId: 'harbor-credentials',
+                usernameVariable: 'HARBOR_USER',
+                passwordVariable: 'HARBOR_PASS'
+            )]) {
+                sh '''
+                chmod +x push-to-harbor.sh
+                ./push-to-harbor.sh
+                '''
             }
-        }*/
+        }
+    }*/
 
             stage('Update GitOps Repo') {
                 steps {
