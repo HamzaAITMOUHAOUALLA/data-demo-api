@@ -10,19 +10,15 @@ set -e
 
 FULL_IMAGE="${HARBOR_REGISTRY}/${HARBOR_PROJECT}/${IMAGE_NAME}:${IMAGE_TAG}"
 
-echo "Tagging image..."
+echo "Tagging image ${FULL_IMAGE}..."
 
 docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${FULL_IMAGE}
-docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${HARBOR_REGISTRY}/${HARBOR_PROJECT}/${IMAGE_NAME}:latest
 
 echo "Logging into Harbor..."
 echo "$HARBOR_PASS" | docker login ${HARBOR_REGISTRY} -u "$HARBOR_USER" --password-stdin
 
-echo "Pushing version ${IMAGE_TAG}..."
+echo "Pushing ${IMAGE_TAG}..."
 docker push ${FULL_IMAGE}
-
-echo "Pushing latest..."
-docker push ${HARBOR_REGISTRY}/${HARBOR_PROJECT}/${IMAGE_NAME}:latest
 
 docker logout ${HARBOR_REGISTRY}
 
